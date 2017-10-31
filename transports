@@ -1,0 +1,14 @@
+#!/bin/sh
+OLDPATH=$PATH
+WHEREAMI=`pwd`
+export PATH=$WHEREAMI/node/bin:"$PATH"
+NODEINST=`which node`
+
+echo
+echo "Starting transports..."
+echo " [i] using node executable $NODEINST"
+node transports.js
+echo
+echo
+
+PATH=$OLDPATH
