@@ -8,11 +8,11 @@
 const bt_port = '6969';
 const bt_host = 'localhost';
 // tus resumable uploads
-const tus_host = '127.0.0.1';
+const tus_host = 'localhost';
 const tus_port = '8000';
 // webtorrent-hybrid server
-const wt_host = '127.0.0.1';
-const wt_port = '8000';
+const wt_host = 'localhost';
+const wt_port = '8800';
 
 // start bittorrent tracker server
 // docs about this -> https://github.com/webtorrent/bittorrent-tracker
@@ -96,11 +96,10 @@ function uploadFiles(files) {
     wt_client.seed(blob, {name: "test.bin"})
   }
   wt_client.on('torrent', function (torrent) {
-    log('infoHash:'+torrent.infoHash);
-    log('magnetURI:'+torrent.magnetURI);
-    log('torrentFile:'+torrent.torrentFile); 
-    
-    alert(torrent.magnetURI);           
+    console.log('infoHash:'+torrent.infoHash);
+    console.log('magnetURI:'+torrent.magnetURI);
+    console.log('torrentFile:'+torrent.torrentFile); 
+  
   });
 
 }
