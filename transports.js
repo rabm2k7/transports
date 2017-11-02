@@ -3,13 +3,19 @@
 // (c)2017 Amadeus de Koning / holosphere r&d
 //
 
-// start bittorrent tracker server on 6969
-// docs about this -> https://github.com/webtorrent/bittorrent-tracker
-
-var bt_port = '6969';
-var bt_host = 'localhost';
+// variables and constants
+// bittorrent tracker
+const bt_port = '6969';
+const bt_host = 'localhost';
+// tus resumable uploads
 const tus_host = '127.0.0.1';
 const tus_port = '8000';
+// webtorrent-hybrid server
+const wt_host = '127.0.0.1';
+const wt_port = '8000';
+
+// start bittorrent tracker server
+// docs about this -> https://github.com/webtorrent/bittorrent-tracker
 
 var btServer = require('bittorrent-tracker').Server
 
@@ -31,6 +37,7 @@ var bt_server = new btServer({
 
 	// change to do blacklist/whitelist check
     //var allowed = (infoHash === 'aaa67059ed6bd08362da625b3ae77f6f4a075aaa');
+	//TODO: build in proper whitelisting/blacklisting
 	var allowed = true;
 
     if (allowed) {
@@ -50,7 +57,7 @@ bt_server.listen(bt_port, bt_host, function() {
 	console.log(' [i] tracker http:'+bt_server.http.address().port+' udp:'+bt_server.udp.address().port+' websockets:'+bt_server.ws.address().port);
 });
 
-// start tus-upload server on 
+// start tus-upload server 
 // docs about this -> https://github.com/tus/tus-node-server
 
 const tus_factory = require('tus-node-server'); 
@@ -65,3 +72,38 @@ tu_server.listen(tus_port, tus_host, function() {
 	// report back on what port is listening
 	console.log(' [i]  tus host:'+tus_host+' port:'+tus_port);
 });
+
+// start webtorrent-hybrid server for web seeds
+// https://webtorrent.io/docs
+
+var WebTorrent = require('webtorrent-hybrid');
+
+var wt_client = null;
+
+if ( WebTorrent.WEBRTC_SUPPORT ) {
+
+  wt_client = new WebTorrent();
+
+}
+  
+//$('#filebuffer').html('<object data="http://bkdn774mehlzlrfz.onion/"/>');
+  
+function uploadFiles(files) {
+  //alert(JSON.stringify(files));
+  for (var i = 0; i < files.length; i++) {
+    //client.seed(files[i]);
+    var blob = new Blob(["This is my blab content"], {type: "text/plain"});
+    wt_client.seed(blob, {name: "test.bin"})
+  }
+  wt_client.on('torrent', function (torrent) {
+    log('infoHash:'+torrent.infoHash);
+    log('magnetURI:'+torrent.magnetURI);
+    log('torrentFile:'+torrent.torrentFile); 
+    
+    alert(torrent.magnetURI);           
+  });
+
+}
+
+
+
