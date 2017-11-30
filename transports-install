@@ -1,5 +1,7 @@
 tools/npm-install tus-node-server
 tools/npm-install webtorrent-hybrid
+tools/npm-install grpc
+tools/npm-install blob-util
 #prototype@holos:~/transports$ tools/npm-install sock
 #/home/prototype/transports
 #└─┬ sock@0.0.6 
