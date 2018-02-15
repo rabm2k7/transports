@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <style>
+            body {
+            background-color: #111;
+               color: #FFF;
+            }
+        </style>
+        
+        <script src="tus.min.js"></script>
+
+    </head>
+
+    <body>
+
+        <form>
+        <input type="file" id="upload"><br>
+        </form>
+
+        <script>
+            document.write("The js is accessible - remove this later");
+
+            var input = document.getElementById('upload')
+
+            input.addEventListener("change", function(e) {
+                // Get the selected file from the input element
+                var file = e.target.files[0]
+
+                // Create a new tus upload
+                var upload = new tus.Upload(file, {
+                    endpoint: "http://localhost:8000/weave/up",
+                    onSuccess: function() {
+                        console.log("Download %s from %s", upload.file.name, upload.url)
+                    }
+                })
+
+                // Start the upload
+                upload.start()
+            })
+
+        </script>
+
+    </body>
+
+</html>
