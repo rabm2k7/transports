@@ -7,6 +7,7 @@ Every packet on the network is a UTF-8 encoded text file, because UTF-8 is byte 
 
 
 |**type**|**subtype**|**brief descriptor**|
+|--|--|--|
 |*definition*|
 |ff00|0000|plain text packet|
 |Let ff00-0000 be a plain text packet, UTF-8 or ASCII encoded. This is the ONLY unencoded/uncompressed/unencrypted allowed on the network and intended for testing purposes only. All other packets should implement fingerprinting for security on the network.|
