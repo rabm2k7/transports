@@ -1,0 +1,79 @@
+<html>
+
+<head>
+
+<style>
+
+body {
+  background-color: #111;
+  color: #FFF;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div id="session_hashtag"></div>
+
+<form>
+<input id="upload_file" name="upload_file[]" type="file" onchange="uploadFiles(this.files)" multiple required />
+</form>
+
+<br/>
+<h2>Log</h2>
+<div class="log"></div>
+
+<br/>
+<div id="filebuffer"></div>
+
+
+
+<script language="javascript" src="jquery-1.12.0.min.js"></script>
+<script language="javascript" src="jquery-fastclick.js"></script>
+<script language="javascript" src="webtorrent.min.js"></script>
+
+<script>
+
+$(document).ready(function (){
+   
+  if ( WebTorrent.WEBRTC_SUPPORT ) {
+
+      client = new WebTorrent();
+
+  }
+  
+  //$('#filebuffer').html('<object data="http://bkdn774mehlzlrfz.onion/"/>');
+  
+});
+
+function uploadFiles(files) {
+  //alert(JSON.stringify(files));
+  for (var i = 0; i < files.length; i++) {
+    //client.seed(files[i]);
+    var blob = new Blob(["This is my blab content"], {type: "text/plain"});
+    client.seed(blob, {name: "test.bin"})
+  }
+  client.on('torrent', function (torrent) {
+    log('infoHash:'+torrent.infoHash);
+    log('magnetURI:'+torrent.magnetURI);
+    log('torrentFile:'+torrent.torrentFile); 
+    
+    alert(torrent.magnetURI);           
+  });
+
+}
+
+function log(str) {
+  var p = document.createElement('p');
+  p.innerHTML = str;
+  document.querySelector('.log').appendChild(p);
+}
+
+</script>
+
+</body>
+
+</html>

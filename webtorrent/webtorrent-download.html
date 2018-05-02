@@ -1,0 +1,73 @@
+<html>
+
+<head>
+
+<style>
+
+body {
+  background-color: #111;
+  color: #FFF;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<br/>
+<h2>Log</h2>
+<div class="log"></div>
+
+<br/>
+<div id="filebuffer"></div>
+
+
+
+<script language="javascript" src="jquery-1.12.0.min.js"></script>
+<script language="javascript" src="webtorrent.min.js"></script>
+
+<script>
+
+$(document).ready(function (){
+   
+  if ( WebTorrent.WEBRTC_SUPPORT ) {
+
+      client = new WebTorrent();
+
+      magnetURI = 'magnet:?xt=urn:btih:520d5aca83e1e8354d7e06ad09df0156cde27d78&dn=test.bin&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com';
+
+      //infoHash = '520d5aca83e1e8354d7e06ad09df0156cde27d78';
+
+      client.add(magnetURI, function ontorrent (torrent) {
+        torrent.files.forEach(function (file) {
+          alert(file.name);
+          file.getBlob(function callback(err,blob){
+            var reader = new FileReader();
+            //handler executed once reading(blob content referenced to a variable) from blob is finished. 
+            reader.addEventListener("loadend", function(e){
+              log(e.target.result)
+            });
+            //start the reading process.
+            reader.readAsText(blob);          
+          });
+        }); 
+      });   
+
+  }
+
+    
+});
+
+function log(str) {
+  var p = document.createElement('p');
+  p.innerHTML = str;
+  document.querySelector('.log').appendChild(p);
+}
+
+</script>
+
+</body>
+
+</html>
