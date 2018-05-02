@@ -22,7 +22,7 @@ We will strive to keep out packages 'universal' and as light as possible, for wh
 |**type**|**subtype**|**brief descriptor**|*definition*|
 |--|--|--|--|
 |ff00|0000|plain text packet|Let ff00-0000 be a plain text packet, UTF-8 or ASCII encoded. This is the ONLY unencoded/uncompressed/unencrypted allowed on the network and intended for testing purposes only. All other packets should implement fingerprinting for security on the network.|
-|ff00|0001|public key|ff00-0001 is a representation of the user's public sign key.|
+|ff00|0001|public key|ff00-0001 is a representation of the user's public encryption key.|
 |ff00|0033|configuration file|ff00-0033 is currently in use as the designation for a configuration file for hybridd.|
 
 
