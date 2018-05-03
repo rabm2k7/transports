@@ -3,7 +3,7 @@ the independent transport filesystem layer
 
 ## packets
 
-Every packet on the network is a UTF-8 encoded text file, because UTF-8 is byte true and since the ground form of the packet (lzma encrypted version) will always be ASCII, we can even code it back into hexadecimal or binary with position-true binary represenation. ff00 is the type reserved for 'system internal' frames right now.
+Every packet on the network is a UTF-8 encoded text file, because UTF-8 is byte true and since the ground form of the packet (lzma encrypted version) will always be ASCII, we can even code it back into hexadecimal or binary with position-true binary representation. ff00 is the type reserved for 'system internal' frames right now.
 
 ### packet addressing
 
@@ -15,7 +15,7 @@ For different types or subtypes, processing methodologies may vary, as long as t
 
 ### packet size considerations
 
-We will strive to keep out packages 'universal' and as light as possible, for which reason excepting *ff00-0000* all packets will likely be lzma compressed (or some other form of compression) by default.  
+We will strive to keep packages 'universal' and as light as possible, for which reason excepting *ff00-0000* all packets will likely be lzma compressed (or some other form of compression) by default.  
 
 ### packet encryption
 
