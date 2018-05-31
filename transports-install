@@ -2,9 +2,10 @@ tools/npm-install tus-node-server
 tools/npm-install webtorrent-hybrid
 tools/npm-install grpc
 tools/npm-install blob-util
+tools/npm-install express
 #prototype@holos:~/transports$ tools/npm-install sock
 #/home/prototype/transports
-#└─┬ sock@0.0.6 
-#  └── coffee-script@1.6.3 
+#└─┬ sock@0.0.6
+#  └── coffee-script@1.6.3
 #
 # seems like socks is just a coffeescript
