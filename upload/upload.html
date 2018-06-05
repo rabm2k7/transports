@@ -1,89 +1,64 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <title>tus-js-client demo</title>
 
   <script language="javascript" src="upload/tus.min.js"></script>
   <script language="javascript" src="upload/jquery-1.12.0.min.js"></script>
-
-<style>
-
-body {
-  background-color: #111;
-  color: #FFF;
-}
-
-
-</style>
 
 </head>
 
 <body>
 
-<div id="session_hashtag"></div>
+  <div id="session_hashtag">
+  </div>
+  <form>
+    <input id="upload_file" name="upload_file[]" type="file" onchange="uploadFiles(this.files)" multiple required />
+  </form>
+  <br/>
+  <h2>Log</h2>
+  <div class="log"></div><br/>
+  <div id="filebuffer"></div>
 
-<form>
-<input id="upload_file" name="upload_file[]" type="file" onchange="uploadFiles(this.files)" multiple required />
-</form>
+  <script>
+    $(document).ready(function() {}
 
-<br/>
-<h2>Log</h2>
-<div class="log"></div>
+    );
 
-<br/>
-<div id="filebuffer"></div>
+    function uploadFiles(files) {
 
+      //alert(JSON.stringify(files));
+      for (var i = 0; i < files.length; i++) {
 
-
-<script>
-
-$(document).ready(function (){
-
-});
-
-function uploadFiles(files) {
-
-  //alert(JSON.stringify(files));
-  for (var i = 0; i < files.length; i++) {
-
-    // create a new tus upload
-    var upload = new tus.Upload(files[i], {
-      endpoint: "http://localhost:8000/",
-      resume: false,
-      chunkSize: 1000,
-      retryDelays: [0, 1000, 3000, 5000],
-      metadata: {
-        filename: files[i].name,
-        filetype: files[i].type
-      },
-      onSuccess: function() {
-        console.log("Download %s from %s", upload.file.name, upload.url)
-        log(`Download ${upload.file.name} from <a href="${upload.url}">${upload.url}</a>`)
-      },
-      onError: function(e) {
-        console.log("Error: ", e);
-      },
-      onProgress: function(bytesUploaded, bytesTotal) {
-        var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
-        console.log(bytesUploaded, bytesTotal, percentage + "%");
+        // create a new tus upload
+        var upload = new tus.Upload(files[i], {
+          endpoint: "http://localhost:8000/",
+          resume: false,
+          chunkSize: 1000,
+          retryDelays: [0, 1000, 3000, 5000],
+          metadata: {
+            filename: files[i].name,
+            filetype: files[i].type
+          },
+          onSuccess: function() {
+            console.log(`Download ${upload.file.name} from <a href="${upload.url}">${upload.url}</a>`);
+            $(".log").append(`Download ${upload.file.name} from <a href="${upload.url}">${upload.url}</a>`);
+          },
+          onError: function(e) {
+            console.log("Error: ", e);
+          },
+          onProgress: function(bytesUploaded, bytesTotal) {
+            var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
+            console.log(bytesUploaded, bytesTotal, percentage + "%");
+          }
+        });
+         // Start the upload
+        upload.start()
       }
-    })
 
-    // Start the upload
-    upload.start()
-
-  }
-
-}
-
-function log(str) {
-  var p = document.createElement('p');
-  p.innerHTML = str;
-  document.querySelector('.log').appendChild(p);
-}
-
-</script>
-
-
+    }
+  </script>
 </body>
 
 </html>
